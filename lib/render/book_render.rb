@@ -7,12 +7,12 @@ module Render
   # Render for book.snbf
   class BookRender
     def render book
-      name = book[:name]
-      author = book[:author]
-      language = book[:language]
-      copyright = book[:copyright]
-      abstract = book[:abstract]
-      created = book[:created]
+      name = book['name']
+      author = book['author']
+      language = book['language']
+      copyright = book['copyright']
+      abstract = book['abstract']
+      created = Time.now.strftime("%Y-%m-%d %H:%M")
 
       template = %q{
 <?xml version="1.0" encoding="UTF-8"?>
@@ -26,7 +26,7 @@ module Render
        <generator>Rss2Snb</generator>
        <created><%=created%></created>
        <abstract><![CDATA[<%=abstract%>]]></abstract>
-       <cover></cover>
+       <cover />
     </head>
 </book-snbf>
       }
