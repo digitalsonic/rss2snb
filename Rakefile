@@ -10,12 +10,12 @@ spec = Gem::Specification.new do |s|
   s.name = 'rss2snb'
   s.version = '0.1'
   s.has_rdoc = true
-  s.extra_rdoc_files = ['README', 'LICENSE-2.0.txt']
+  s.extra_rdoc_files = ['README.txt', 'LICENSE-2.0.txt']
   s.summary = 'A simple tool which converts RSS to SNB file.'
   s.description = "A simple tool which converts RSS to SNB file."
   s.author = 'DigitalSonic'
   s.email = 'digitalsonic.dxf@gmail.com'
-  s.files = %w(README LICENSE-2.0.txt Rakefile) + Dir.glob("{lib,spec}/**/*")
+  s.files = %w(README.txt LICENSE-2.0.txt Rakefile) + Dir.glob("{lib,spec}/**/*")
   s.require_path = "lib"
   s.bindir = "bin"
   s.add_dependency('nokogiri', '~> 1.4')
@@ -28,9 +28,9 @@ Rake::GemPackageTask.new(spec) do |p|
 end
 
 Rake::RDocTask.new do |rdoc|
-  files =['README', 'LICENSE-2.0.txt', 'lib/**/*.rb']
+  files =['README.txt', 'LICENSE-2.0.txt', 'lib/**/*.rb']
   rdoc.rdoc_files.add(files)
-  rdoc.main = "README" # page to start on
+  rdoc.main = "README.txt" # page to start on
   rdoc.title = "rss2snb docs"
   rdoc.rdoc_dir = 'doc/rdoc' # rdoc output folder
   rdoc.options << '--line-numbers'
