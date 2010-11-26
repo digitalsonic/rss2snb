@@ -5,9 +5,13 @@ require 'iconv'
 require 'rubygems'
 require 'nokogiri'
 require 'logger'
-
+require 'java'
 
 module Util
+  def self.is_windows?
+    (java.lang.System.get_properties['os.name'] =~ /Windows/).nil?
+  end
+
   def create_logger
     @@logger ||= Logger.new(STDOUT)
     @@logger.level = Logger::INFO
