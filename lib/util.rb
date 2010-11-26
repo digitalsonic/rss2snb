@@ -1,6 +1,7 @@
 #--
 # Copyright (c) 2010 DigitalSonic
 #++
+require 'fileutils'
 require 'iconv'
 require 'rubygems'
 require 'nokogiri'
@@ -9,7 +10,7 @@ require 'java'
 
 module Util
   def self.is_windows?
-    (java.lang.System.get_properties['os.name'] =~ /Windows/).nil?
+    !(java.lang.System.get_properties['os.name'] =~ /Windows/).nil?
   end
 
   def create_logger
@@ -37,10 +38,8 @@ module Util
 
   def create_dir_struct path
     abs_path= File.expand_path(path)
-    Dir.mkdir abs_path unless File.exist? abs_path
-    Dir.mkdir "#{abs_path}/snbc" unless File.exist? "#{abs_path}/snbc"
-    Dir.mkdir "#{abs_path}/snbc/images" unless File.exist? "#{abs_path}/snbc/images"
-    Dir.mkdir "#{abs_path}/snbf" unless File.exist? "#{abs_path}/snbf"
+    FileUtils.makedirs "#{abs_path}/snbc/images"
+    FileUtils.makedirs "#{abs_path}/snbf"
   end
 
   def write_to_file path, content
