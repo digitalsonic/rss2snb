@@ -10,7 +10,8 @@ import com.sun.jna.Native
 import com.sdo.bambooksdk.BambookCoreJRubyHelper
 
 def pack_to_snb snb_file, snb_dir
-  Native.loadLibrary("#{File.expand_path(File.dirname(__FILE__))}/BambookCore".to_java, BambookCoreJRubyHelper.getBambookCoreClass()).BambookPackSnbFromDir(snb_file, snb_dir)
+  suffix = Util::is_windows? ? "" : ".so"
+  Native.loadLibrary("#{File.expand_path(File.dirname(__FILE__))}/BambookCore#{suffix}".to_java, BambookCoreJRubyHelper.getBambookCoreClass()).BambookPackSnbFromDir(snb_file, snb_dir)
   Logger.new(STDOUT).warn "Writing #{snb_file}. DONE!"
 end
 
