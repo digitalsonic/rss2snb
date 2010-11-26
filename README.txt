@@ -1,9 +1,10 @@
 ﻿RSS2SNB
 
 用于将RSS转换为Bambook SNB自有格式的小工具。其实是做给程序员的一个小玩具:-)
+可跨平台运行于Windows与Linux之上。基于JRuby开发。
 
 遵循Apache License, Version 2.0。
-源代码地址：https://github.com/digitalsonic/rss2snb
+源代码地址： https://github.com/digitalsonic/rss2snb
 
 
 DigitalSonic
@@ -12,8 +13,8 @@ DigitalSonic
 安装指南
 ===========================================
 1. 安装JRuby
-到http://jruby.org/download下载最新JRuby包，事先请安装Java。
-如果是Windows，也可选择自带JRE的exe安装包。
+到 http://jruby.org/download 下载最新JRuby包，事先请安装JDK。
+如果是Windows，也可选择自带Java的exe安装包。
 如果是Ubuntu，请自行选择apt方式或下载tar.gz包。
 
 Windows中，打开“开始”菜单，点击“运行”，键入“CMD”，点击“确认”。
@@ -39,24 +40,33 @@ run <回车>
 
 Ubuntu中，运行run.sh
 
+注意：
+Ubuntu中运行时，可能会报几个so文件依赖不到，例如libxml2.so、libxslt.so和libexslt.so。
+这些库其实是有的，在/usr/lib中可以找到几个同文件主名的文件，请自行按报错提示的so文件重行做下ln。
+这个错是JRuby通过FFI来调用Nokogiri时报的，与程序本身没什么关系。
+
+
 ChangeLog
 ===========================================
 v0.1 
 开始时间：2010-11-22
-发布时间：2010-11-25
+发布时间：2010-11-26
 
 初始版本，使用JRuby开发，可运行于WinXP及Ubuntu，其他系统未做测试。
-支持从配置文件（例如config.yml）中读取配置，从RSS中生成SNB，所有Channel生成到一个文件中。
+支持从配置文件（例如config.yml）中读取配置，多线程读取RSS，生成SNB。
 本版本不支持图片，但图片功能已基本开发完成，下个版本将加入。
 
 RoadMap
 ===========================================
 v0.2
 支持图片，多线程下载，图片优化
-支持代理服务器
 
 v0.3
-支持自定义抓取插件，计划首批支持 http://highscalability.com/ ，如时间允许支持InfoQ中文站
+支持代理服务器（有些RSS直接访问不到，原因你懂的）
+支持Wifi上传
 
 v0.4
-可能会考虑增加Swing GUI。
+支持自定义抓取插件，计划首批支持 http://highscalability.com/ ，如时间允许支持InfoQ中文站
+
+v0.5
+可能会考虑增加Swing GUI
