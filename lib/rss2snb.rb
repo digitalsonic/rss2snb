@@ -7,6 +7,11 @@ require 'render/render'
 require 'config_loader'
 require 'logger'
 
+require 'java'
+require 'jna.jar'
+require 'BambookLib.jar'
+import com.sun.jna.Native
+import com.sdo.bambooksdk.BambookCoreJRubyHelper
 
 # Command-Line based runner
 class Rss2Snb
@@ -19,7 +24,8 @@ class Rss2Snb
   def run
     channels = fetch_channels @config['channels']
     generate_files @config['book'], channels, @config['general']['temp']
-    {:file => @config['general']['target'], :dir => @config['general']['temp']}
+    pack_to_snb @config['general']['target'], @config['general']['temp']
+    log_info "DONE!!!!"
   end
 
   def fetch_channels channel_sets
@@ -50,5 +56,11 @@ class Rss2Snb
       content = snbc_render.render({:title => chapters[idx].title, :body => chapters[idx].description})
       write_to_file "#{target}/snbc/#{idx}.snbc", content
     end
+  end
+
+  def pack_to_snb snb_file, snb_dir
+    suffix = Util::is_windows? ? "dll" : "so"
+    Native.loadLibrary("#{File.expand_path(File.dirname(__FILE__))}/BambookCore.#{suffix}".to_java, BambookCoreJRubyHelper.getBambookCoreClass()).BambookPackSnbFromDir(snb_file, snb_dir)
+    log_info "Writing #{snb_file}."
   end
 end
