@@ -13,7 +13,7 @@ DigitalSonic
 安装指南
 ===========================================
 1. 安装JRuby
-到 http://jruby.org/download 下载最新JRuby包，事先请安装JDK。
+到 http://jruby.org/download 下载最新JRuby包，事先请安装JDK（版本>=1.6）。
 如果是Windows，也可选择自带Java的exe安装包。
 如果是Ubuntu，请自行选择apt方式或下载tar.gz包。
 
