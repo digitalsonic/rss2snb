@@ -3,6 +3,7 @@
 #++
 require 'util'
 require 'rss/channel'
+require 'rss/feed_item_parser'
 require 'render/render'
 require 'config_loader'
 require 'logger'
@@ -22,18 +23,19 @@ class Rss2Snb
   end
 
   def run
-    channels = fetch_channels @config['channels']
+    channels = fetch_channels @config['channels'], @config['general']['temp']
     generate_files @config['book'], channels, @config['general']['temp']
     pack_to_snb @config['general']['target'], @config['general']['temp']
     log_info "DONE!!!!"
   end
 
-  def fetch_channels channel_sets
+  def fetch_channels channel_sets, temp_dir
     channels = []
     threads = []
+    parser = Rss::FeedItemParser.new temp_dir
     channel_sets.each do |cfg|
       threads << Thread.new(cfg) do |ch_cfg|
-        channels << Rss::Channel.new(ch_cfg['url'], ch_cfg['max'])
+        channels << Rss::Channel.new(ch_cfg['url'], ch_cfg['max'], parser)
       end
     end
     join_multi_threads threads

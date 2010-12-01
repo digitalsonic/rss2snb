@@ -15,7 +15,7 @@ module Image
     
     def initialize
       @threads = []
-      @image_list = []      
+      @image_list = []
     end
 
     def start_download(uri, target)
@@ -43,7 +43,6 @@ module Image
       @image_list
     end
 
-
     def fit_to_width file, width = 600
       img =  Magick::Image.read(file).first
       old_width, old_height = img.columns, img.rows
@@ -52,7 +51,11 @@ module Image
         to_width, to_height = width, (old_height * (width / old_width.to_f)).to_i
         img.resize(to_width, to_height).write(file)
       end
-      Image.new file, to_width, to_height
+      Image.new file, get_suffix(file), to_width, to_height
+    end
+    
+    def get_suffix file
+      file[file.rindex(".")...file.length]
     end
   end
 end

@@ -6,8 +6,8 @@ module Image
   # Class for image
   class Image
     attr_accessor :path, :width, :heigth
-    def initialize path, width, height
-      @path, @width, @height = path, width, height
+    def initialize path, suffix, width, height
+      @path, @suffix, @width, @height = path, suffix, width, height
     end
   end
 end
