@@ -62,7 +62,7 @@ class Rss2Snb
 
   def pack_to_snb snb_file, snb_dir
     suffix = Util::is_windows? ? "dll" : "so"
-    Native.loadLibrary("#{File.expand_path(File.dirname(__FILE__))}/BambookCore.#{suffix}".to_java, BambookCoreJRubyHelper.getBambookCoreClass()).BambookPackSnbFromDir(snb_file, snb_dir)
+    Native.loadLibrary("#{File.expand_path(File.dirname(__FILE__))}/BambookCore.#{suffix}".to_java, BambookCore.java_class).BambookPackSnbFromDir(snb_file, snb_dir)
     log_info "Writing #{snb_file}."
   end
 end
