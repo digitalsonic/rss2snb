@@ -12,7 +12,7 @@ require 'java'
 require 'jna.jar'
 require 'BambookLib.jar'
 import com.sun.jna.Native
-import com.sdo.bambooksdk.BambookCoreJRubyHelper
+import com.sdo.bambooksdk.BambookCore
 
 # Command-Line based runner
 class Rss2Snb
