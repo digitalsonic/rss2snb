@@ -13,7 +13,7 @@ DigitalSonic
 安装指南
 ===========================================
 1. 安装JRuby
-到 http://jruby.org/download 下载最新JRuby包，事先请安装JDK（版本>=1.6）。
+到 http://jruby.org/download 下载最新JRuby包，事先请安装JDK（版本>=1.5，建议使用1.6以上版本）。
 如果是Windows，也可选择自带Java的exe安装包。
 如果是Ubuntu，请自行选择apt方式或下载tar.gz包。
 
@@ -60,7 +60,7 @@ v0.1
 支持从配置文件（例如config.yml）中读取配置，多线程读取RSS，生成SNB。
 
 
-RoadMap
+Future RoadMap
 ===========================================
 v0.3
 支持代理服务器（有些RSS直接访问不到，原因你懂的）
