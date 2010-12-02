@@ -32,8 +32,8 @@ class Rss2Snb
   def fetch_channels channel_sets, temp_dir
     channels = []
     threads = []
-    parser = Rss::FeedItemParser.new temp_dir
-    channel_sets.each do |cfg|
+    channel_sets.each_with_index do |cfg, idx|
+      parser = Rss::FeedItemParser.new temp_dir, "#{idx}"
       threads << Thread.new(cfg) do |ch_cfg|
         channels << Rss::Channel.new(ch_cfg['url'], ch_cfg['max'], parser)
       end

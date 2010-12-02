@@ -38,8 +38,12 @@ module Util
 
   def create_dir_struct path
     abs_path= File.expand_path(path)
-    FileUtils.makedirs "#{abs_path}/snbc/images"
-    FileUtils.makedirs "#{abs_path}/snbf"
+    create_dir "#{abs_path}/snbc/images"
+    create_dir "#{abs_path}/snbf"
+  end
+
+  def create_dir path
+    FileUtils.makedirs File.expand_path(path)
   end
 
   def write_to_file path, content

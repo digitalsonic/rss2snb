@@ -23,7 +23,7 @@ module Rss
       open(url) { |s| content = s.read }
       rss = RSS::Parser.parse content, false
       set_channel_info rss
-      set_channel_items rss, max_items_count, item_parser
+      set_channel_items rss, item_parser, max_items_count unless item_parser.nil?
     end
 
     def set_channel_info rss
@@ -35,11 +35,10 @@ module Rss
       @language = rss.channel.language || 'zh-CN'
     end
 
-    def set_channel_items rss, count = 10, item_parser = nil
+    def set_channel_items rss, item_parser, count = 10
       @items = []
-      item_parser ||= FeedItemParser.new
       (0...(count <= rss.items.size ? count : rss.items.size)).each do |idx|
-        @items << item_parser.parse(rss.items[idx])
+        @items << item_parser.parse(rss.items[idx], idx)
       end
     end
   end

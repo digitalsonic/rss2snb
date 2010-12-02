@@ -27,6 +27,8 @@ module Image
     def download(url, target)
       Net::HTTP.start(url.host, url.port) do |http|
         resp = http.get url.path
+        log_info "Downloading #{url}."
+        create_dir target[0...target.rindex("/")]
         open(target, "wb") {|file| file.write resp.body}
         fit_to_width target
       end
@@ -36,7 +38,7 @@ module Image
       @threads.each do |thread|
         begin
           thread.join
-        rescue e
+        rescue Exception => e
           log_error "Download Error: #{e.message}"
         end
       end
