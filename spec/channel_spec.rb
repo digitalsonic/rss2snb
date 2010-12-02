@@ -1,10 +1,12 @@
 require 'rss/channel'
+require 'rss/feed_item_parser'
 
 module Rss
   describe Channel do
     before(:each) do
       url = 'http://feedsky.blogbus.com/digitalsonic_blogbus_com'
-      @channel = Channel.new url, 5
+      parser = Rss::FeedItemParser.new "#{File.expand_path(File.dirname(__FILE__))}", "0"
+      @channel = Channel.new url, 2, parser
     end
 
     it "should parse the right channel infomation" do
@@ -14,13 +16,6 @@ module Rss
       @channel.description.should == '希望这里能成为见证我成长的地方。'
     end
 
-    it "should parse the specified number of items" do
-      @channel.items.size.should == 5
-    end
 
-    it "should have right item titles and links" do
-      @channel.items[0].title.should_not be_nil
-      @channel.items[0].link.should include('http://digitalsonic.blogbus.com/')
-    end
   end
 end
