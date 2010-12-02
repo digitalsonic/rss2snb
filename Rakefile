@@ -8,7 +8,7 @@ require 'spec/rake/spectask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'rss2snb'
-  s.version = '0.1'
+  s.version = '0.2'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.txt', 'LICENSE-2.0.txt']
   s.summary = 'A simple tool which converts RSS to SNB file.'
@@ -18,6 +18,7 @@ spec = Gem::Specification.new do |s|
   s.files = %w(README.txt LICENSE-2.0.txt Rakefile) + Dir.glob("{lib,spec}/**/*")
   s.require_path = "lib"
   s.bindir = "bin"
+  s.add_dependency('rmagick4j', '~> 0.3.7')
   s.add_dependency('nokogiri', '~> 1.4')
 end
 
