@@ -41,8 +41,8 @@ module Rss
     def parse_html_and_download_images doc, index
       downloader = Image::MultiThreadDownloader.new
       inner_index = 0
-      doc.xpath("//img").each do |node|
-        src = node['src']
+      doc.xpath("//img | //IMG").each do |node|
+        src = node['src'] || node['SRC']
         if src.downcase.include?(".png") || src.downcase.include?(".jpg")
           suffix = src.downcase.include?(".png") ? ".png" : ".jpg"
           downloader.start_download(src, "#{get_download_path(@base_dir, @index, index)}/#{inner_index}#{suffix}")
