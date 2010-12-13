@@ -11,7 +11,7 @@ module Rss
   # Default parser for feed item.
   class FeedItemParser
     include Util
-  
+
     def initialize base_dir = ".", index = "", encode = 'UTF-8'
       @base_dir, @index, @encode = base_dir, index, encode
     end
@@ -34,10 +34,13 @@ module Rss
     def parse_description html, images, index
       text_start, text_end = "<text><![CDATA[", "]]></text>"
       desc = encoding(html_to_txt(html), @encode).strip.gsub("\n", "#{text_end}\n#{text_start}")
+      if desc.start_with? "#img["
+        desc = "#{text_end}#{text_start}" + desc
+      end
       images.each_with_index { |image, idx| desc = desc.gsub("#{text_start}#img[#{idx}]##{text_end}", "<img width=\"#{image.width}\" height=\"#{image.height}\">#{@index}/#{index}/#{idx}#{image.suffix}</img>") }
       text_start + desc + text_end
     end
-    
+
     def parse_html_and_download_images doc, index, proxy
       downloader = Image::MultiThreadDownloader.new proxy
       inner_index = 0

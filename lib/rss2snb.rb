@@ -24,7 +24,7 @@ class Rss2Snb
     channels = fetch_channels @config['channels'], @config['general']['temp']
     generate_files @config['book'], channels, @config['general']['temp']
     pack_to_snb @config['general']['target'], @config['general']['temp']
-    upload_to_bb @config['general']['target'], @config['general']['bb_address'] if @config['general']['auto_upload'] == 'true'
+    upload_to_bb @config['general']['target'], @config['general']['bb_address'] if @config['general']['auto_upload']
     log_info "DONE!!!!"
   end
 

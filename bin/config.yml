@@ -9,7 +9,7 @@ general:
   # 生成的最终snb文件路径
   target: d:/rss2snb/rss.snb
   # 是否自动上传至BamBook
-  auto_upload: false
+  auto_upload: true
   # BamBook地址，如用USB连接，默认为192.168.250.2；如用WIFI，请指定其他IP
   bb_address: 192.168.250.2
 
@@ -35,11 +35,17 @@ book:
 
 # RSS设置
 channels:
-  - url: http://feed.feedsky.com/programmer
+  - url: http://www.dbanotes.net/atom.xml
     # 最多获取多少篇文章
     max: 5
     # 是否使用代理，需要用“true”
     use_proxy: false
+  - url: http://dreamhead.blogbus.com/index.rdf
+    max: 5
+    use_proxy: false
   - url: http://feeds.feedburner.com/HighScalability
+    max: 5
+    use_proxy: true
+  - url: http://developers.facebook.com/blog/feed
     max: 5
     use_proxy: true

@@ -8,11 +8,12 @@ require 'BambookLib.jar'
 import com.sun.jna.Native
 import com.sun.jna.ptr.IntByReference
 import com.sdo.bambooksdk.BambookCore
+import com.sdo.bambooksdk.Const
 import com.sdo.bambooksdk.TransCallback
 
 # Bambook related methods
 class Bambook
-  attr_accessor :progress
+  attr_accessor :upload_progress, :upload_status
   include Util
   def initialize
     suffix = is_windows? ? "dll" : "so"
@@ -30,7 +31,7 @@ class Bambook
     begin
       log_info "Connecting to Bambook #{ip_addr}."
       result = @bambook_core.BambookConnect ip_addr, 0, conn
-      raise Exception.new("ResultCode:#{result}") unless result == 0
+      raise Exception.new("ResultCode:#{result}") unless result == Const.BR_SUCC
     rescue Exception => e
       log_error "Can't connect to Bambook. #{e.message}"
     end
@@ -44,10 +45,15 @@ class Bambook
   def upload_to_bambook snb_path, conn
     @upload_progress = 0
     @upload_status = "Uploading"
-    @bambook_core.BambookAddPrivBook conn, snb_path, UploadCallBack.new(self), 0
-    until @upload_progress == 100 || @upload_status != "Uploading"
-      sleep(10)
-      log_info "#{@upload_status} - Progress: #{@upload_progress}%"
+    log_info "Start Uploading..."
+    result = @bambook_core.BambookAddPrivBook conn, snb_path, UploadCallBack.new(self), 0
+    if result == Const.BR_SUCC
+      until @upload_progress == 100 || @upload_status != "Uploading"
+        sleep(5)
+        log_info "#{@upload_status} - Progress: #{@upload_progress}%"
+      end
+    else
+      log_error "Upload Failed!"
     end
   end
 end
@@ -63,17 +69,15 @@ class UploadCallBack
 
   def invoke status, progress, userData
     case status
-      when 0 
-        log_info "Uploading! Progress: #{progress}"
-        @bambook.upload_progress = progress
-      when 1
-        log_info "Upload Success!"
-        @bambook.upload_progress = 100
-        @bambook.upload_status = "Upload Success!"
-      when 2
-        log_error "Upload Failed!"
-        @bambook.upload_progress = 100
-        @bambook.upload_status = "Upload Failed!"
+    when Const.TRANS_STATUS_TRANS
+      @bambook.upload_progress = progress
+    when Const.TRANS_STATUS_DONE
+      @bambook.upload_progress = 100
+      @bambook.upload_status = "Upload Success!"
+    when Const.TRANS_STATUS_ERR
+      log_error "Upload Failed!"
+      @bambook.upload_progress = progress
+      @bambook.upload_status = "Upload Failed!"
     end
   end
 end

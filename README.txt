@@ -35,7 +35,7 @@ jruby -S gem uninstall rss2snb
 Ubuntu中，请在解压缩的目录中自行运行上面的两条jruby命令
 
 3.执行生成snb文件
-先修改config.yml，然后在rss2snb\bin目录中，运行：
+先修改config.yml（各配置说明见文件内描述），然后在rss2snb\bin目录中，运行：
 run <回车>
 
 Ubuntu中，运行run.sh
@@ -48,6 +48,13 @@ Ubuntu中运行时，可能会报几个so文件依赖不到，例如libxml2.so�
 
 ChangeLog
 ===========================================
+v0.3
+发布时间：2010-12-14
+
+支持代理服务器（有些RSS直接访问不到，原因你懂的）
+支持自动上传
+根据操作系统判断配置文件中图书信息（book段）的字符集，Windows为GBK，Ubuntu为UTF-8
+
 v0.2
 发布时间：2010-12-03
 
@@ -56,16 +63,12 @@ v0.2
 v0.1 
 发布时间：2010-11-26
 
-初始版本，使用JRuby开发，可运行于WinXP及Ubuntu，其他系统未做测试。
-支持从配置文件（例如config.yml）中读取配置，多线程读取RSS，生成SNB。
+初始版本，使用JRuby开发，可运行于WinXP及Ubuntu，其他系统未做测试
+支持从配置文件（例如config.yml）中读取配置，多线程读取RSS，生成SNB
 
 
 Future RoadMap
 ===========================================
-v0.3
-支持代理服务器（有些RSS直接访问不到，原因你懂的）
-支持自动上传
-
 v0.4
 支持自定义抓取插件，计划首批支持 http://highscalability.com/ ，如时间允许支持InfoQ中文站
 
