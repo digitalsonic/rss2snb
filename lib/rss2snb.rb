@@ -1,18 +1,14 @@
 #--
 # Copyright (c) 2010 DigitalSonic
 #++
+require 'logger'
+require 'net/http'
 require 'util'
+require 'bambook'
 require 'rss/channel'
 require 'rss/feed_item_parser'
 require 'render/render'
 require 'config_loader'
-require 'logger'
-
-require 'java'
-require 'jna.jar'
-require 'BambookLib.jar'
-import com.sun.jna.Native
-import com.sdo.bambooksdk.BambookCore
 
 # Command-Line based runner
 class Rss2Snb
@@ -20,12 +16,15 @@ class Rss2Snb
   
   def initialize config_file = 'config.yml'
     @config = ConfigLoader.new(config_file).config
+    @bambook = Bambook.new 
   end
 
+  # main entrance
   def run
     channels = fetch_channels @config['channels'], @config['general']['temp']
     generate_files @config['book'], channels, @config['general']['temp']
     pack_to_snb @config['general']['target'], @config['general']['temp']
+    upload_to_bb @config['general']['target'], @config['general']['bb_address'] if @config['general']['auto_upload'] == 'true'
     log_info "DONE!!!!"
   end
 
@@ -35,7 +34,8 @@ class Rss2Snb
     channel_sets.each_with_index do |cfg, idx|
       parser = Rss::FeedItemParser.new temp_dir, "#{idx}"
       threads << Thread.new(cfg) do |ch_cfg|
-        channels << Rss::Channel.new(ch_cfg['url'], ch_cfg['max'], parser)
+        proxy = ch_cfg['use_proxy'] ? create_proxy_or_direct_http(@config['proxy']) : create_proxy_or_direct_http(Hash.new)
+        channels << Rss::Channel.new(ch_cfg['url'], ch_cfg['max'], parser, proxy)
       end
     end
     join_multi_threads threads
@@ -61,8 +61,14 @@ class Rss2Snb
   end
 
   def pack_to_snb snb_file, snb_dir
-    suffix = Util::is_windows? ? "dll" : "so"
-    Native.loadLibrary("#{File.expand_path(File.dirname(__FILE__))}/BambookCore.#{suffix}".to_java, BambookCore.java_class).BambookPackSnbFromDir(snb_file, snb_dir)
-    log_info "Writing #{snb_file}."
+    @bambook.pack_snb_from_dir snb_file, snb_dir
+  end
+
+  def upload_to_bb snb_file, bb_addr
+    log_info "Start uploading to Bambook..."
+    conn = @bambook.get_conn bb_addr
+    @bambook.upload_to_bambook snb_file, conn
+    @bambook.close_conn conn
+    log_info "Uploaded!"
   end
 end

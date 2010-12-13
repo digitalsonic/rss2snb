@@ -17,7 +17,6 @@ class Bambook
   def initialize
     suffix = is_windows? ? "dll" : "so"
     @bambook_core = Native.loadLibrary("#{File.expand_path(File.dirname(__FILE__))}/BambookCore.#{suffix}".to_java, BambookCore.java_class)
-    @progress = 0
   end
 
   def pack_snb_from_dir target_file, dir
@@ -43,8 +42,13 @@ class Bambook
   end
 
   def upload_to_bambook snb_path, conn
+    @upload_progress = 0
+    @upload_status = "Uploading"
     @bambook_core.BambookAddPrivBook conn, snb_path, UploadCallBack.new(self), 0
-    sleep(1) until @progress == 100
+    until @upload_progress == 100 || @upload_status != "Uploading"
+      sleep(10)
+      log_info "#{@upload_status} - Progress: #{@upload_progress}%"
+    end
   end
 end
 
@@ -58,11 +62,18 @@ class UploadCallBack
   end
 
   def invoke status, progress, userData
-    @bambook.progress = (status != 0 ? progress : 100)
     case status
-      when 0 then log_info "Uploading! Progress: #{progress}"
-      when 1 then log_info "Upload Success!"
-      when 2 then log_error "Upload Failed!"
+      when 0 
+        log_info "Uploading! Progress: #{progress}"
+        @bambook.upload_progress = progress
+      when 1
+        log_info "Upload Success!"
+        @bambook.upload_progress = 100
+        @bambook.upload_status = "Upload Success!"
+      when 2
+        log_error "Upload Failed!"
+        @bambook.upload_progress = 100
+        @bambook.upload_status = "Upload Failed!"
     end
   end
 end

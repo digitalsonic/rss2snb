@@ -3,7 +3,7 @@
 #++
 
 require 'render/book_render'
-require 'channel'
+require 'rss/channel'
 
 module Render
   describe BookRender do
@@ -13,7 +13,8 @@ module Render
 
     it "should genrate the book.sndf file content" do
       url = 'http://feedsky.blogbus.com/digitalsonic_blogbus_com'
-      channel = Rss::Channel.new(url)
+
+      channel = Rss::Channel.new(url, 1, nil)
       book = Hash.new
       book[:name] = channel.title
       book[:author] = channel.title

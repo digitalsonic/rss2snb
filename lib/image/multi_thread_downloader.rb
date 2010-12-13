@@ -13,9 +13,10 @@ module Image
   class MultiThreadDownloader
     include Util
     
-    def initialize
+    def initialize proxy = Net::HTTP
       @threads = []
       @image_list = []
+      @proxy = proxy
     end
 
     def start_download(uri, target)
@@ -25,7 +26,7 @@ module Image
     end
 
     def download(url, target)
-      Net::HTTP.start(url.host, url.port) do |http|
+      @proxy.start(url.host, url.port) do |http|
         resp = http.get url.path
         log_info "Downloading #{url}."
         create_dir target[0...target.rindex("/")]
@@ -39,7 +40,7 @@ module Image
         begin
           thread.join
         rescue Exception => e
-          log_error "Download Error: #{e.message}"
+          log_error e.message
         end
       end
       @image_list

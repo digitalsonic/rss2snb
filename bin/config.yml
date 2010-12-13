@@ -1,25 +1,45 @@
 ## Rss2Snb Config File
 ## 请注意缩进，不要使用Tab，全部用空格。
+## 注：各平台均使用默认字符集，Windows请使用GBK，Ubuntu请使用UTF-8（别改就是了）
 
+# 通用设置
 general:
   # 临时目录路径
   temp: d:/rss2snb/target
   # 生成的最终snb文件路径
   target: d:/rss2snb/rss.snb
+  # 是否自动上传至BamBook
+  auto_upload: false
+  # BamBook地址，如用USB连接，默认为192.168.250.2；如用WIFI，请指定其他IP
+  bb_address: 192.168.250.2
+
+# HTTP代理服务器配置，以下四项，如没有则留空
+proxy:
+  proxy_host: 127.0.0.1
+  proxy_port: 8580
+  proxy_user: 
+  proxy_password: 
+
+# 电子书信息
 book:
   # 书名
-  name: My RSS Collection
+  name: RSS电子书
   # 作者
   author: Rss2Snb
   # 语言，如无必要，请勿修改
   language: zh-CN
   # 版权信息
-  copyright: all rights reserved to the origin authors
+  copyright: 所有版权归原作者所有，本书由Rss2Snb生成。
   # 摘要
-  abstract: E-Book generated from RSS.
+  abstract: 由Rss2Snb根据指定RSS生成的电子书。
+
+# RSS设置
 channels:
-  - url: http://www.dbanotes.net/index.xml
+  - url: http://feed.feedsky.com/programmer
     # 最多获取多少篇文章
     max: 5
-  - url: http://feed.feedsky.com/bluedavy
+    # 是否使用代理，需要用“true”
+    use_proxy: false
+  - url: http://feeds.feedburner.com/HighScalability
     max: 5
+    use_proxy: true

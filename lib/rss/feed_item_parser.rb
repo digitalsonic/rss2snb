@@ -19,13 +19,13 @@ module Rss
     # Parse the given rss item.
     # if parse_desc == true, also parse the description;
     # or you can parse it later yourself.
-    def parse rss_item, index, parse_desc = true
+    def parse rss_item, index, proxy = nil, parse_desc = true
       item = FeedItem.new
       item.title = encoding(html_to_txt(rss_item.title), @encode)
       item.link, item.date = rss_item.link, rss_item.date
       if parse_desc
         src = Nokogiri::HTML(rss_item.description)
-        parsed = parse_html_and_download_images(src, index)
+        parsed = parse_html_and_download_images(src, index, proxy)
       	item.description = parse_description parsed[:doc], parsed[:images], index
       end
       item
@@ -38,11 +38,11 @@ module Rss
       text_start + desc + text_end
     end
     
-    def parse_html_and_download_images doc, index
-      downloader = Image::MultiThreadDownloader.new
+    def parse_html_and_download_images doc, index, proxy
+      downloader = Image::MultiThreadDownloader.new proxy
       inner_index = 0
-      doc.xpath("//img | //IMG").each do |node|
-        src = node['src'] || node['SRC']
+      doc.xpath("//img").each do |node|
+        src = node['src']
         if src.downcase.include?(".png") || src.downcase.include?(".jpg")
           suffix = src.downcase.include?(".png") ? ".png" : ".jpg"
           downloader.start_download(src, "#{get_download_path(@base_dir, @index, index)}/#{inner_index}#{suffix}")

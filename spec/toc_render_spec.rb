@@ -3,7 +3,7 @@
 #++
 
 require 'render/toc_render'
-require 'channel'
+require 'rss/channel'
 
 module Render
   describe TocRender do
@@ -13,7 +13,7 @@ module Render
 
     it "should generate the right content" do
       url = 'http://feedsky.blogbus.com/digitalsonic_blogbus_com'
-      channel = Rss::Channel.new(url)
+      channel = Rss::Channel.new url, 1, Rss::FeedItemParser.new
       content = @toc_render.render channel.items
       content.should_not be_nil
       puts content

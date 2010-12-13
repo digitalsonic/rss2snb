@@ -3,14 +3,24 @@
 #++
 require 'fileutils'
 require 'iconv'
+require 'net/http'
 require 'rubygems'
 require 'nokogiri'
 require 'logger'
 require 'java'
 
 module Util
-  def self.is_windows?
+  def is_windows?
     !(java.lang.System.get_properties['os.name'] =~ /Windows/).nil?
+  end
+
+  def create_proxy_or_direct_http proxy
+    if proxy['proxy_host'].nil?
+      log_info "Connecting Directly."
+    else
+      log_info "Connecting with Proxy(#{proxy['proxy_host']}:#{proxy['proxy_port']})."
+    end
+    Net::HTTP::Proxy(proxy['proxy_host'], proxy['proxy_port'], proxy['proxy_user'], proxy['proxy_password'])
   end
 
   def create_logger
@@ -58,7 +68,8 @@ module Util
       begin
         thread.join
       rescue Exception => e
-        log_error "Error: #{e.message}"
+        log_error e.message
+        @@logger.debug e
       end
     end
   end
