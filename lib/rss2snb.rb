@@ -15,7 +15,9 @@ class Rss2Snb
   include Util
   
   def initialize config_file = 'config.yml'
-    @config = ConfigLoader.new(config_file).config
+    config_loader = ConfigLoader.new(config_file)
+    @config = config_loader.config
+    @plugins = config_loader.plugins
     @bambook = Bambook.new 
   end
 
@@ -32,7 +34,7 @@ class Rss2Snb
     channels = []
     threads = []
     channel_sets.each_with_index do |cfg, idx|
-      parser = Rss::FeedItemParser.new temp_dir, "#{idx}"
+      parser = Rss::FeedItemParser.new temp_dir, "#{idx}", @plugins
       threads << Thread.new(cfg) do |ch_cfg|
         proxy = ch_cfg['use_proxy'] ? create_proxy_or_direct_http(@config['proxy']) : create_proxy_or_direct_http(Hash.new)
         channels << Rss::Channel.new(ch_cfg['url'], ch_cfg['max'], parser, proxy)

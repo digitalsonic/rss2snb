@@ -4,6 +4,7 @@
 
 require 'rss/1.0'
 require 'rss/2.0'
+require 'rss/dublincore'
 require 'net/http'
 require 'uri'
 
@@ -30,7 +31,9 @@ module Rss
       content = nil
       url = URI.parse(uri)
       @proxy.start(url.host, url.port) do |http|
-        response = http.get(url.path)
+        path = url.path
+        path += "?#{url.query}" unless url.query.nil?
+        response = http.get(path)
         case response
         when Net::HTTPSuccess then content = response.body
         when Net::HTTPRedirection then content = read_channel(response['location'])
@@ -45,9 +48,10 @@ module Rss
       @title = encoding(html_to_txt(rss.channel.title))
       @link = rss.channel.link
       @description = encoding(html_to_txt(rss.channel.description))
-      @date = rss.channel.date
-      @copyright = encoding(html_to_txt(rss.channel.copyright))
-      @language = rss.channel.language || 'zh-CN'
+      @date = rss.channel.date if rss.channel.respond_to?(:date)
+      @date = rss.channel.dc_date if rss.channel.respond_to?(:dc_date)
+      @copyright = rss.channel.respond_to?(:copyright) ? encoding(html_to_txt(rss.channel.copyright)) : nil
+      @language = rss.channel.respond_to?(:language) ? rss.channel.language : 'zh-CN'
     end
 
     def set_channel_items rss, item_parser, count = 10
