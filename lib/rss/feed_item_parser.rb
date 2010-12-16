@@ -80,7 +80,7 @@ module Rss
 
     def get_content_plugin link
       @plugins.each { |prefix, plugin|  return plugin if link.start_with? prefix }
-      RSS::Plugin::DefaultContentPlugin.new
+      Rss::Plugin::DefaultContentPlugin.new
     end
   end
 end
