@@ -48,6 +48,10 @@ Ubuntu中运行时，可能会报几个so文件依赖不到，例如libxml2.so�
 
 ChangeLog
 ===========================================
+v0.4
+发布时间：2010-12-18
+支持自定义抓取插件，默认提供http://www.infoq.com和http://highscalability.com的支持
+
 v0.3
 发布时间：2010-12-14
 
@@ -69,8 +73,5 @@ v0.1
 
 Future RoadMap
 ===========================================
-v0.4
-支持自定义抓取插件，计划首批支持 http://highscalability.com/ ，如时间允许支持InfoQ中文站
-
 v0.5
 可能会考虑增加Swing GUI
