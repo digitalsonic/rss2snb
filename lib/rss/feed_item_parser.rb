@@ -7,6 +7,7 @@ require 'util'
 require 'rss/feed_item'
 require 'rss/plugin/default_content_plugin'
 require 'rss/plugin/info_q'
+require 'rss/plugin/high_scalability'
 require 'image/multi_thread_downloader'
 
 module Rss
@@ -28,9 +29,9 @@ module Rss
       item.date = rss_item.date if rss_item.respond_to?(:date)
       item.date = rss_item.dc_date if rss_item.respond_to?(:dc_date)
       if parse_desc
-        plugin = get_content_plugin(item.link)
-        content = Nokogiri::HTML(plugin.fetch(rss_item, proxy))
-        parsed = parse_html_and_download_images(item.link, content, index, proxy)
+        content_and_link = get_content_plugin(item.link).fetch(rss_item, proxy)
+        content = Nokogiri::HTML(content_and_link[:content])
+        parsed = parse_html_and_download_images(content_and_link[:link], content, index, proxy)
       	item.description = parse_description parsed[:doc], parsed[:images], index
       end
       item

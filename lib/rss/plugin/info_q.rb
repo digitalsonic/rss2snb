@@ -15,6 +15,7 @@ module Rss
 
       def fetch rss_item, proxy
         url = URI.parse(rss_item.link)
+		link = rss_item.link
         content = rss_item.description
         proxy.start(url.host, url.port) do |http|
           path = url.path
@@ -23,7 +24,7 @@ module Rss
           body = http.get(path).body
           content = get_content rss_item, body
         end
-        content
+        {:content => content, :link => link}
       end
 
       # get content from the body(news, articles and interviews have their own methods)
