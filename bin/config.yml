@@ -9,16 +9,26 @@ general:
   # 生成的最终snb文件路径
   target: d:/rss2snb/rss.snb
   # 是否自动上传至BamBook
-  auto_upload: true
+  auto_upload: false
   # BamBook地址，如用USB连接，默认为192.168.250.2；如用WIFI，请指定其他IP
   bb_address: 192.168.250.2
 
 # HTTP代理服务器配置，以下四项，如没有则留空
 proxy:
-  proxy_host: 127.0.0.1
-  proxy_port: 8580
+  proxy_host: 
+  proxy_port: 
   proxy_user: 
   proxy_password: 
+
+# 内容抓取插件配置
+plugins:
+    # 具体Feed项的链接前缀，此处为InfoQ插件的前缀
+  - url_prefix: http://www.infoq.com
+    # 针对该链接的插件类名
+    plugin: Rss::Plugin::InfoQ
+    # 以下插件对应的网站RSS是http://feeds.feedburner.com/HighScalability ，该RSS需要代理访问
+  - url_prefix: http://feedproxy.google.com/~r/HighScalability
+    plugin: Rss::Plugin::HighScalability
 
 # 电子书信息
 book:
@@ -35,17 +45,9 @@ book:
 
 # RSS设置
 channels:
-  - url: http://www.dbanotes.net/atom.xml
+    # RSS地址
+  - url: http://feed.feedsky.com/programmer
     # 最多获取多少篇文章
     max: 5
     # 是否使用代理，需要用“true”
     use_proxy: false
-  - url: http://dreamhead.blogbus.com/index.rdf
-    max: 5
-    use_proxy: false
-  - url: http://feeds.feedburner.com/HighScalability
-    max: 5
-    use_proxy: true
-  - url: http://developers.facebook.com/blog/feed
-    max: 5
-    use_proxy: true
