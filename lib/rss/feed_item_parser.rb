@@ -39,12 +39,9 @@ module Rss
 
     def parse_description html, images, index
       text_start, text_end = "<text><![CDATA[", "]]></text>"
-      desc = encoding(html_to_txt(html), @encode).strip
-      desc = desc.gsub(/\r\n/, "\n")
-      desc = desc.gsub(/^\s+$/, "\n")
-      desc = desc.gsub(/\n+/, "#{text_end}\n#{text_start}")
+      desc = encoding(html_to_txt(html), @encode).strip.gsub(/\r\n/, "\n").gsub(/^\s+$/, "\n").gsub(/\n+/, "#{text_end}\n#{text_start}")
       desc = "#{text_end}#{text_start}" + desc if desc.start_with? "#img["
-      images.each_with_index { |image, idx| desc = desc.gsub("#{text_start}#img[#{idx}]##{text_end}", "<img width=\"#{image.width}\" height=\"#{image.height}\">#{@index}/#{index}/#{idx}#{image.suffix}</img>") }
+      images.each_with_index { |image, idx| desc = desc.gsub("#img[#{idx}]#", "#{text_end}<img width=\"#{image.width}\" height=\"#{image.height}\">#{@index}/#{index}/#{idx}#{image.suffix}</img>#{text_start}") }
       desc = desc + "#{text_start}" if desc.end_with? "</img>"
       text_start + desc + text_end
     end

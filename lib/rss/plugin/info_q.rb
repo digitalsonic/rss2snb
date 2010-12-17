@@ -5,14 +5,11 @@ require 'rubygems'
 require 'nokogiri'
 require 'net/http'
 require 'uri'
-require 'util'
 
 module Rss
   module Plugin
     # Fetch content from infoq.com
     class InfoQ
-      include Util
-
       def fetch rss_item, proxy
         url = URI.parse(rss_item.link)
 		link = rss_item.link
@@ -20,7 +17,6 @@ module Rss
         proxy.start(url.host, url.port) do |http|
           path = url.path
           path += "?#{url.query}" unless url.query.nil?
-          log_info "Fetch #{path}"
           body = http.get(path).body
           content = get_content rss_item, body
         end
