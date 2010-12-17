@@ -51,6 +51,8 @@ module Rss
         node.xpath('./div[@class="comments-sort"]').each { |n| n.remove }
         node.xpath('./ol[@class="comments"]').each { |n| n.remove }
         node.xpath('./div[@class="box-bottom"]').each { |n| n.remove }
+        node.xpath('./div[@class="forum-list-tree"]').each { |n| n.remove }
+        node.xpath('./div[@class="comments-sort"]').each { |n| n.remove }
         node.xpath('./span').each { |n| n.remove }
         node.to_html
       end
