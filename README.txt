@@ -50,7 +50,7 @@ ChangeLog
 ===========================================
 v0.4
 发布时间：2010-12-18
-支持自定义抓取插件，默认提供http://www.infoq.com和http://highscalability.com的支持
+支持自定义抓取插件，默认提供 http://www.infoq.com 和 http://highscalability.com 的支持
 
 v0.3
 发布时间：2010-12-14
