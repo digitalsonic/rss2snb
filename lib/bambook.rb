@@ -48,9 +48,17 @@ class Bambook
     log_info "Start Uploading..."
     result = @bambook_core.BambookAddPrivBook conn, snb_path, UploadCallBack.new(self), 0
     if result == Const.BR_SUCC
+      hold_times = 0
+      last_progress = 0
       until @upload_progress == 100 || @upload_status != "Uploading"
         sleep(5)
         log_info "#{@upload_status} - Progress: #{@upload_progress}%"
+        hold_times = last_progress == @upload_progress ? (hold_times + 1) : 0
+        last_progress = @upload_progress
+        if (hold_times == 5)
+          log_error "Upload Aborted! Maybe snb file has been uploaded."
+          break
+        end
       end
     else
       log_error "Upload Failed!"
