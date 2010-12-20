@@ -15,6 +15,7 @@ import com.sdo.bambooksdk.TransCallback
 class Bambook
   attr_accessor :upload_progress, :upload_status
   include Util
+  
   def initialize
     suffix = is_windows? ? "dll" : "so"
     @bambook_core = Native.loadLibrary("#{File.expand_path(File.dirname(__FILE__))}/BambookCore.#{suffix}".to_java, BambookCore.java_class)
@@ -23,6 +24,16 @@ class Bambook
   def pack_snb_from_dir target_file, dir
     @bambook_core.BambookPackSnbFromDir target_file, dir
     log_info "Writing #{target_file}."
+  end
+
+  def verify snb_file
+    result = @bambook_core.BambookVerifySnbFile snb_file
+    if result == Const.BR_SUCC
+      log_info "#{snb_file} is a valid SNB file."
+    else
+      log_error "#{snb_file} is invalid!! ResultCode=#{result}"
+    end
+    result == Const.BR_SUCC
   end
 
   # Connect to bambook with a specific IP.
@@ -56,7 +67,7 @@ class Bambook
         hold_times = last_progress == @upload_progress ? (hold_times + 1) : 0
         last_progress = @upload_progress
         if (hold_times == 5)
-          log_error "Upload Aborted! Maybe snb file has been uploaded."
+          log_error "Upload Aborted! Maybe snb file has already been uploaded."
           break
         end
       end
