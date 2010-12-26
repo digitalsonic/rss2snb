@@ -8,7 +8,7 @@ require 'spec/rake/spectask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'rss2snb'
-  s.version = '0.4'
+  s.version = '0.5'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.txt', 'LICENSE-2.0.txt']
   s.summary = 'A simple tool which converts RSS to SNB file.'
@@ -16,7 +16,7 @@ spec = Gem::Specification.new do |s|
   s.author = 'DigitalSonic'
   s.email = 'digitalsonic.dxf@gmail.com'
   s.homepage = 'https://github.com/digitalsonic/rss2snb'
-  s.files = %w(README.txt LICENSE-2.0.txt Rakefile) + Dir.glob("{lib,spec}/**/*")
+  s.files = %w(README.txt LICENSE-2.0.txt Rakefile) + Dir.glob("lib/**/*")
   s.require_path = "lib"
   s.bindir = "bin"
   s.add_dependency('rmagick4j', '~> 0.3.7')
