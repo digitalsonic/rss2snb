@@ -20,15 +20,9 @@ proxy:
   proxy_user: 
   proxy_password: 
 
-# 内容抓取插件配置
-plugins:
-    # 具体Feed项的链接前缀，此处为InfoQ插件的前缀
-  - url_prefix: http://www.infoq.com
-    # 针对该链接的插件类名
-    plugin: Rss::Plugin::InfoQ
-    # 以下插件对应的网站RSS是http://feeds.feedburner.com/HighScalability ，该RSS需要代理访问
-  - url_prefix: http://feedproxy.google.com/~r/HighScalability
-    plugin: Rss::Plugin::HighScalability
+## =====================================================
+## 以下内容如无必要，无需修改
+## =====================================================
 
 # 电子书信息
 book:
@@ -43,21 +37,21 @@ book:
   # 摘要
   abstract: 由Rss2Snb根据指定RSS生成的电子书。
 
-# RSS设置
-channels:
-    # RSS地址
-  - url: http://feed.feedsky.com/programmer
-    # 最多获取多少篇文章
-    max: 5
-    # 是否使用代理，需要用“true”
-    use_proxy: false
-  - url: http://www.infoq.com/cn/rss/rss.action?token=8vC28HTjoN1bHqK1ici1aDVeW1vqB01Q
-    # 最多获取多少篇文章
-    max: 10
-    # 是否使用代理，需要用“true”
-    use_proxy: false
-  - url: http://feeds.feedburner.com/HighScalability
-    # 最多获取多少篇文章
-    max: 10
-    # 是否使用代理，需要用“true”
-    use_proxy: true
+# 内容抓取插件配置
+plugins:
+    # 具体Feed项的链接前缀，此处为InfoQ插件的前缀
+  - url_prefix: http://www.infoq.com
+    # 针对该链接的插件类名
+    plugin: Rss::Plugin::InfoQ
+
+    # 以下插件对应的网站RSS是http://feeds.feedburner.com/HighScalability ，该RSS需要代理访问
+  - url_prefix: http://feedproxy.google.com/~r/HighScalability
+    plugin: Rss::Plugin::HighScalability
+
+    # 以下插件对应的网站RSS是http://feeds.feedburner.com/nosql ，该RSS需要代理访问
+  - url_prefix: http://feedproxy.google.com/~r/nosql
+    plugin: Rss::Plugin::MyNoSql
+
+    # 以下插件对应的网站RSS是http://feeds.feedburner.com/arch ，该RSS需要代理访问
+  - url_prefix: http://feedproxy.google.com/~r/arch
+    plugin: Rss::Plugin::ScalableWebArchitectures

@@ -57,7 +57,11 @@ module Rss
     def set_channel_items rss, item_parser, count = 10
       @items = []
       (0...(count <= rss.items.size ? count : rss.items.size)).each do |idx|
-        @items << item_parser.parse(rss.items[idx], idx, @proxy)
+        begin
+          @items << item_parser.parse(rss.items[idx], idx, @proxy)
+        rescue Exception => e
+          log_error "Can't parse #{rss.items[idx].link}, skipped. Message: #{e.message}" 
+        end
       end
     end
   end

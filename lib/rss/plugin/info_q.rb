@@ -12,7 +12,7 @@ module Rss
     class InfoQ
       def fetch rss_item, proxy
         url = URI.parse(rss_item.link)
-		link = rss_item.link
+        link = rss_item.link
         content = rss_item.description
         proxy.start(url.host, url.port) do |http|
           path = url.path

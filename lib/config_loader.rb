@@ -5,7 +5,7 @@
 require 'yaml'
 require 'util'
 
-# Class to load book config.
+# Class to load book configs.
 class ConfigLoader
   include Util
   attr_reader :config, :plugins
@@ -16,6 +16,15 @@ class ConfigLoader
     file.close
     encode_book_info
     parse_plugins
+    load_channels
+  end
+
+  # Load RSS channels from the config file.
+  def load_channels config_file = 'channels.yml'
+    file = File.open config_file
+    channels = YAML.load(file)
+    file.close
+    @config['channels'] = channels['channels']
   end
 
   # If it's under windows, the default charset is GBK. Bambook needs UTF-8

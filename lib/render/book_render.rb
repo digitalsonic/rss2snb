@@ -22,7 +22,7 @@ module Render
        <author><![CDATA[<%=author%>]]></author>
        <language><%=language%></language>
        <rights><![CDATA[<%=copyright%>]]></rights>
-       <publisher>None</publisher>
+       <publisher>RSS</publisher>
        <generator>Rss2Snb</generator>
        <created><%=created%></created>
        <abstract><![CDATA[<%=abstract%>]]></abstract>

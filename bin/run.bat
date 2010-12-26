@@ -1,2 +1,2 @@
 @echo off
-call jruby run.rb
+call jruby run.rb --1.9

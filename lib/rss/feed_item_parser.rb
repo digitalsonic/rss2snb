@@ -8,6 +8,8 @@ require 'rss/feed_item'
 require 'rss/plugin/default_content_plugin'
 require 'rss/plugin/info_q'
 require 'rss/plugin/high_scalability'
+require 'rss/plugin/my_no_sql'
+require 'rss/plugin/scalable_web_architectures'
 require 'image/multi_thread_downloader'
 
 module Rss
