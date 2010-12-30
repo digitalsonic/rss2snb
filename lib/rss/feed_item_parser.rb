@@ -62,14 +62,11 @@ module Rss
           end
         end
 
-        if src.downcase.include?(".png") || src.downcase.include?(".jpg")
-          suffix = src.downcase.include?(".png") ? ".png" : ".jpg"
-          downloader.start_download(src, "#{get_download_path(@base_dir, @index, index)}/#{inner_index}#{suffix}")
-          new_node = Nokogiri::XML::Node.new("p", node.parent)
-          new_node.content = "#img[#{inner_index}]#"
-          inner_index += 1
-          node.replace(new_node)
-        end
+        downloader.start_download(src, "#{get_download_path(@base_dir, @index, index)}/#{inner_index}.jpg")
+        new_node = Nokogiri::XML::Node.new("p", node.parent)
+        new_node.content = "#img[#{inner_index}]#"
+        inner_index += 1
+        node.replace(new_node)
       end
       image_list = downloader.wait_until_finish
       {:doc => doc.to_html, :images => image_list}
