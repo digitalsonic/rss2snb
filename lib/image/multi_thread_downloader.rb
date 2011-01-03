@@ -27,10 +27,15 @@ module Image
 
     def download(url, target)
       @proxy.start(url.host, url.port) do |http|
-        resp = http.get url.path
+        response = http.get url.path
         log_info "Downloading #{url}."
         create_dir target[0...target.rindex("/")]
-        open(target, "wb") {|file| file.write resp.body}
+
+        case response
+        when Net::HTTPSuccess then write_bin_file(target, response.body)
+        when Net::HTTPRedirection, Net::HTTPFound then download(URI.parse(response['location']), target)
+        else raise Exception.new "Fail to fetch RSS #{url}!"
+	end
         fit_to_width target
       end
     end
@@ -41,6 +46,7 @@ module Image
           thread.join
         rescue Exception => e
           log_error e.message
+	  log_debug e
         end
       end
       @image_list

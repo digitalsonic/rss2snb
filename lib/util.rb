@@ -38,6 +38,11 @@ module Util
     @@logger.error message
   end
 
+  def log_debug message
+    create_logger
+    @@logger.debug message
+  end
+
   def html_to_txt html
     Nokogiri::HTML(html).text
   end
@@ -69,8 +74,12 @@ module Util
         thread.join
       rescue Exception => e
         log_error e.message
-        @@logger.debug e
+        log_debug e
       end
     end
+  end
+
+  def write_bin_file target, content
+     open(target, "wb") {|file| file.write content}
   end
 end

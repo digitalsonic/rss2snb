@@ -36,9 +36,9 @@ module Rss
         response = http.get(path)
         case response
         when Net::HTTPSuccess then content = response.body
-        when Net::HTTPRedirection then content = read_channel(response['location'])
+        when Net::HTTPRedirection, Net::HTTPFound then content = read_channel(response['location'])
         else raise Exception.new "Fail to fetch RSS #{url}!"
-        end
+	end
         log_info "Successed reading RSS channel #{uri}"
       end
       content
@@ -60,7 +60,8 @@ module Rss
         begin
           @items << item_parser.parse(rss.items[idx], idx, @proxy)
         rescue Exception => e
-          log_error "Can't parse #{rss.items[idx].link}, skipped. Message: #{e.message}" 
+          log_error "Can't parse #{rss.items[idx].link}, skipped. Message: #{e.message}"
+	  log_debug e
         end
       end
     end
