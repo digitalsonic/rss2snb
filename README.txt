@@ -27,7 +27,7 @@ Ubuntu中，在终端中运行 jruby --version
 假设rss2snb.zip解压缩到了D盘rss2snb目录中，打开CMD命令行，运行：
 d: <回车>
 cd d:\rss2snb <回车>
-jruby -S gem install rss2snb-0.6.1.gem --no-ri --no-rdoc
+jruby -S gem install rss2snb-0.7.gem --no-ri --no-rdoc
 
 随后会自动进行安装，如果事先安装过想卸载，运行：
 jruby -S gem uninstall rss2snb
@@ -50,6 +50,12 @@ Ubuntu中运行时，可能会报几个so文件依赖不到，例如libxml2.so�
 
 ChangeLog
 ===========================================
+v0.7
+发布时间：2010-01-18
+增加SpringSource Team Blog（ http://blog.springsource.com ）全文抓取支持。
+支持JRuby 1.6.0.RC1。
+默认提供了一些程序员关注的网站RSS配置，有些需要代理访问的站点默认被注释。
+
 v0.6.1
 发布时间：2010-01-04
 修正一个与HTTP::Found相关的缺陷，该缺陷导致Feedsky读取不正常。
@@ -62,7 +68,7 @@ v0.5
 发布时间：2010-12-27
 增加myNoSQL（ http://nosql.mypopescu.com/ ）和Scalable Web Architectures（ http://www.royans.net/arch/ ）全文抓取支持。
 分离配置文件，独立RSS Channel至channels.yml中。明确区分需要用户配置的项。
-默认使用JRuby的1.9模式运行。
+默认使用JRuby的1.9模式运行。（1.9的库支持ATOM了）
 
 v0.4
 发布时间：2010-12-18
@@ -89,5 +95,4 @@ v0.1
 
 Future RoadMap
 ===========================================
-v0.7
-可能会考虑增加图形化配置界面，目前有打算尝试HTML5。
+可能会考虑增加图形化配置界面，不过时间未确定，目前没有强烈的需求。

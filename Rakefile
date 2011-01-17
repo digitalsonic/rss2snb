@@ -4,11 +4,10 @@ require 'rake/clean'
 require 'rake/gempackagetask'
 require 'rake/rdoctask'
 require 'rake/testtask'
-require 'spec/rake/spectask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'rss2snb'
-  s.version = '0.6.1'
+  s.version = '0.7'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.txt', 'LICENSE-2.0.txt']
   s.summary = 'A simple tool which converts RSS to SNB file.'
@@ -37,10 +36,4 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'doc/rdoc' # rdoc output folder
   rdoc.options << '--line-numbers'
   rdoc.options << '--charset' << 'utf-8'
-end
-
-
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = FileList['spec/**/*.rb']
-  t.libs << Dir["lib"]
 end
