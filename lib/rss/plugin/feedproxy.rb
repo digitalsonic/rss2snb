@@ -29,6 +29,10 @@ module Rss
         end
         [content, url.to_s]
       end
+      
+      def get_path url
+        url.path
+      end
     end
   end
 end
