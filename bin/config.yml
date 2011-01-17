@@ -55,3 +55,7 @@ plugins:
     # 以下插件对应的网站RSS是http://feeds.feedburner.com/arch ，该RSS需要代理访问
   - url_prefix: http://feedproxy.google.com/~r/arch
     plugin: Rss::Plugin::ScalableWebArchitectures
+
+    # 以下插件对应的网站RSS是http://feeds.feedburner.com/SpringSourceTeamBlog ，该RSS需要代理访问
+  - url_prefix: http://feedproxy.google.com/~r/SpringSourceTeamBlog
+    plugin: Rss::Plugin::SpringsourceTeamBlog
