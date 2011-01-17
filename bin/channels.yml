@@ -3,24 +3,39 @@ channels:
     # RSS地址
   - url: http://feed.feedsky.com/programmer
     # 最多获取多少篇文章
-    max: 5
+    max: 1
     # 是否使用代理，需要用“true”
     use_proxy: false
+  - url: http://feed.feedsky.com/ruanyf
+    max: 0
+    use_proxy: false
+  - url: http://timyang.net/feed/
+    max: 0
+    use_proxy: false
   - url: http://www.dbanotes.net/index.xml
-    max: 2
+    max: 0
     use_proxy: false
   - url: http://coolshell.cn/?feed=rss2
-    max: 2
+    max: 0
     use_proxy: false
   - url: http://www.infoq.com/cn/rss/rss.action?token=8vC28HTjoN1bHqK1ici1aDVeW1vqB01Q
     max: 10
     use_proxy: false
-  - url: http://feeds.feedburner.com/HighScalability
+  - url: http://www.infoq.com/rss/rss.action?token=K8xY6NaDZJ8ZXi6T4X3rtz48LdqTfn8Z
     max: 5
+    use_proxy: false
+  - url: http://feed.feedsky.com/nosqlfan
+    max: 5
+    use_proxy: false
+  - url: http://feeds.feedburner.com/HighScalability
+    max: 1
     use_proxy: true
   - url: http://feeds.feedburner.com/arch
-    max: 2
+    max: 1
     use_proxy: true
   - url: http://feeds.feedburner.com/nosql
+    max: 3
+    use_proxy: true
+  - url: http://feeds.feedburner.com/SpringSourceTeamBlog
     max: 5
     use_proxy: true
