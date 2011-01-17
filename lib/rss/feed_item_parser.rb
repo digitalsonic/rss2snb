@@ -10,6 +10,7 @@ require 'rss/plugin/info_q'
 require 'rss/plugin/high_scalability'
 require 'rss/plugin/my_no_sql'
 require 'rss/plugin/scalable_web_architectures'
+require 'rss/plugin/springsource_team_blog.rb'
 require 'image/multi_thread_downloader'
 
 module Rss

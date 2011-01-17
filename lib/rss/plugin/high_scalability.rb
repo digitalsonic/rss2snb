@@ -5,31 +5,12 @@ require 'rubygems'
 require 'nokogiri'
 require 'net/http'
 require 'uri'
+require 'rss/plugin/feedproxy'
 
 module Rss
   module Plugin
     # Fetch content from highscalability.com
-    class HighScalability
-      def fetch rss_item, proxy
-        url = URI.parse rss_item.link
-        content, link = fetch_content url, proxy
-        {:content => content, :link => link }
-      end
-	  
-      def fetch_content url, proxy
-        content = nil
-        proxy.start(url.host, url.port) do |http|
-          path = get_path url
-          response = http.get(path)
-          case response
-          when Net::HTTPSuccess then content = post_process(response.body)
-          when Net::HTTPRedirection then content, url = fetch_content(URI.parse(response['location']), proxy)
-          else raise Exception.new "Fail to fetch #{url}!"
-          end
-        end
-        [content, url.to_s]
-      end
-
+    class HighScalability < Feedproxy
       def get_path url
         url.path + "?printerFriendly=true"
       end
