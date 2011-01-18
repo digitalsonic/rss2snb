@@ -44,6 +44,10 @@ plugins:
     # 针对该链接的插件类名
     plugin: Rss::Plugin::InfoQ
 
+    # 以下插件对应的网站RSS是http://blog.nosqlfan.com
+  - url_prefix: http://blog.nosqlfan.com/html
+    plugin: Rss::Plugin::NosqlFan
+
     # 以下插件对应的网站RSS是http://feeds.feedburner.com/HighScalability ，该RSS需要代理访问
   - url_prefix: http://feedproxy.google.com/~r/HighScalability
     plugin: Rss::Plugin::HighScalability

@@ -24,7 +24,9 @@ class ConfigLoader
     file = File.open config_file
     channels = YAML.load(file)
     file.close
-    @config['channels'] = channels['channels']
+    @config['channels'] = channels['channels'].inject([]) do |arr, channel|
+      channel['skip'] ? arr : arr << channel
+    end
   end
 
   # If it's under windows, the default charset is GBK. Bambook needs UTF-8
