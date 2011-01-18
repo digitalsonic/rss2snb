@@ -55,7 +55,7 @@ v0.7
 增加SpringSource Team Blog（ http://blog.springsource.com ）和NoSQLfan（ http://blog.nosqlfan.com ）全文抓取支持。
 支持JRuby 1.6.0.RC1。
 可配置跳过某些RSS，方便临时去除一些订阅项。
-默认提供了一些程序员关注的网站RSS配置，有些需要代理访问的站点默认被注释。
+默认提供了一些程序员关注的网站RSS配置，有些需要代理访问的站点默认被跳过。
 
 v0.6.1
 发布时间：2010-01-04
