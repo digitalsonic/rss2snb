@@ -71,6 +71,5 @@ class Rss2Snb
     conn = @bambook.get_conn bb_addr
     @bambook.upload_to_bambook snb_file, conn
     @bambook.close_conn conn
-    log_info "Uploaded!"
   end
 end
