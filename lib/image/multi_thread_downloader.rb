@@ -52,7 +52,7 @@ module Image
       @image_list
     end
 
-    def fit_to_width file, width = 600
+    def fit_to_width file, width = 500
       img =  Magick::Image.read(file).first
       old_width, old_height = img.columns, img.rows
       to_width, to_height = old_width, old_height
