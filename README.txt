@@ -27,7 +27,7 @@ Ubuntu中，在终端中运行 jruby --version
 假设rss2snb.zip解压缩到了D盘rss2snb目录中，打开CMD命令行，运行：
 d: <回车>
 cd d:\rss2snb <回车>
-jruby -S gem install rss2snb-0.7.gem --no-ri --no-rdoc
+jruby -S gem install rss2snb-0.8.gem --no-ri --no-rdoc
 
 随后会自动进行安装，如果事先安装过想卸载，运行：
 jruby -S gem uninstall rss2snb
@@ -50,6 +50,10 @@ Ubuntu中运行时，可能会报几个so文件依赖不到，例如libxml2.so�
 
 ChangeLog
 ===========================================
+v0.8
+发布时间：2010-01-20
+调整下载图片的横向分辨率为500，修正无法上传时依旧显示上传成功的BUG。
+
 v0.7
 发布时间：2010-01-18
 增加SpringSource Team Blog（ http://blog.springsource.com ）和NoSQLfan（ http://blog.nosqlfan.com ）全文抓取支持。
