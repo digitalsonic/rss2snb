@@ -14,11 +14,12 @@ module Util
     !(java.lang.System.get_properties['os.name'] =~ /Windows/).nil?
   end
 
-  def create_proxy_or_direct_http proxy
+  def create_proxy_or_direct_http proxy, url = nil
+    url_for_log = url.nil? ? '' : url
     if proxy['proxy_host'].nil?
-      log_info "Connecting Directly."
+      log_info "Connecting #{url_for_log} Directly."
     else
-      log_info "Connecting with Proxy(#{proxy['proxy_host']}:#{proxy['proxy_port']})."
+      log_info "Connecting #{url_for_log} with Proxy(#{proxy['proxy_host']}:#{proxy['proxy_port']})."
     end
     Net::HTTP::Proxy(proxy['proxy_host'], proxy['proxy_port'], proxy['proxy_user'], proxy['proxy_password'])
   end

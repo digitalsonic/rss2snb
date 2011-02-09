@@ -1,6 +1,7 @@
 ## Rss2Snb Config File
 ## 请注意缩进，不要使用Tab，全部用空格。
-## 注：各平台均使用默认字符集，Windows请使用GBK，Ubuntu请使用UTF-8（别改就是了）
+## 各平台均使用默认字符集，Windows请使用GBK，Ubuntu请使用UTF-8
+## 请注意临时目录的配置。
 
 # 通用设置
 general:

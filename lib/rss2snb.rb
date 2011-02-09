@@ -36,7 +36,8 @@ class Rss2Snb
     channel_sets.each_with_index do |cfg, idx|
       parser = Rss::FeedItemParser.new temp_dir, "#{idx}", @plugins
       threads << Thread.new(cfg) do |ch_cfg|
-        proxy = ch_cfg['use_proxy'] ? create_proxy_or_direct_http(@config['proxy']) : create_proxy_or_direct_http(Hash.new)
+        proxy_setting = ch_cfg['use_proxy'] ? @config['proxy'] : Hash.new
+        proxy = create_proxy_or_direct_http(proxy_setting, ch_cfg['url'])
         channels << Rss::Channel.new(ch_cfg['url'], ch_cfg['max'], parser, proxy)
       end
     end
