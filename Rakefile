@@ -7,7 +7,7 @@ require 'rake/testtask'
 
 spec = Gem::Specification.new do |s|
   s.name = 'rss2snb'
-  s.version = '0.9'
+  s.version = '1.0'
   s.has_rdoc = true
   s.extra_rdoc_files = ['README.txt', 'LICENSE-2.0.txt']
   s.summary = 'A simple tool which converts RSS to SNB file.'

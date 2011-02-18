@@ -27,7 +27,7 @@ Ubuntu中，在终端中运行 jruby --version
 假设rss2snb.zip解压缩到了D盘rss2snb目录中，打开CMD命令行，运行：
 d: <回车>
 cd d:\rss2snb <回车>
-jruby -S gem install rss2snb-0.9.gem --no-ri --no-rdoc
+jruby -S gem install rss2snb-1.0.gem --no-ri --no-rdoc
 
 随后会自动进行安装，如果事先安装过想卸载，运行：
 jruby -S gem uninstall rss2snb
@@ -50,6 +50,11 @@ Ubuntu中运行时，可能会报几个so文件依赖不到，例如libxml2.so�
 
 ChangeLog
 ===========================================
+v1.0
+发布时间：2011-02-19
+修正myNoSQL网站结构变化带来的插件问题。
+在插件无法正确解析的情况下，直接取RSS的Description作为正文内容。
+
 v0.9
 发布时间：2011-02-10
 调整部分程序日志输出、说明等内容。
