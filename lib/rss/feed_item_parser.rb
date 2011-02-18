@@ -33,7 +33,15 @@ module Rss
       item.date = rss_item.date if rss_item.respond_to?(:date)
       item.date = rss_item.dc_date if rss_item.respond_to?(:dc_date)
       if parse_desc
-        content_and_link = get_content_plugin(item.link).fetch(rss_item, proxy)
+        plugin = get_content_plugin(item.link)
+        begin
+          content_and_link = plugin.fetch rss_item, proxy
+        rescue Exception => e
+          unless plugin.instance_of? Rss::Plugin::DefaultContentPlugin
+            log_info "Can't parse #{item.link}! Reason: #{e.message} Try DefaultContentPlugin."
+            content_and_link = get_default_plugin().fetch rss_item, proxy
+	  end
+	end
         content = Nokogiri::HTML(content_and_link[:content])
         parsed = parse_html_and_download_images(content_and_link[:link], content, index, proxy)
       	item.description = parse_description parsed[:doc], parsed[:images], index
@@ -82,6 +90,10 @@ module Rss
 
     def get_content_plugin link
       @plugins.each { |prefix, plugin|  return plugin if link.start_with? prefix }
+      get_default_plugin
+    end
+
+    def get_default_plugin
       Rss::Plugin::DefaultContentPlugin.new
     end
   end
